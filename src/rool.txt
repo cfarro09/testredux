@@ -1,0 +1,106 @@
+--function
+CREATE OR REPLACE FUNCTION public.ufn_application_sel(
+	p_corpid bigint,
+	p_orgid bigint,
+	p_roleid bigint)
+    RETURNS TABLE(applicationid bigint, description character varying, type character varying, path character varying, icon character varying, key character varying, parent bigint, insert boolean) 
+    LANGUAGE 'plpgsql'
+
+    COST 100
+    VOLATILE 
+    ROWS 1000
+AS $BODY$
+
+BEGIN
+	RETURN QUERY
+	select ap.applicationid, ap.description, ap.type, ap.path, ap.icon, ap.key, ap.parent, ra.insert
+	from roleapplication ra 
+	inner join application ap on ra.corpid = ap.corpid and ra.orgid = ap.orgid and ra.applicationid = ap.applicationid
+	WHERE ra.corpid = 1
+		and ra.orgid = 1
+		and ra.roleid = p_roleid
+		and (ap.path != '' or ap.parent = -1)
+		and ra.status <> 'ELIMINADO'
+	order by ap.parent, ap.menuorder;
+END
+$BODY$;
+
+--role
+insert into role 
+(corpid, orgid, description, status, type, createdate, createby, changedate, changeby, code)
+values(1,1,'SUPERVISOR', 'ACTIVO','NINGUNO', NOW(), 'zyxmeadmin', NOW(), 'zyxmeadmin', 'SUPERVISOR')
+
+--roleapplication
+INSERT INTO roleapplication 
+(corpid, orgid, roleid, applicationid, view, modify, insert, delete, status, type, createdate, createby, changedate, changeby, edit) VALUES
+(1,1,4,41,true,true,true,true,'ACTIVO','NINGUNO',NOW(),'VCAADMIN',NOW(),'VCAADMIN',false);
+
+INSERT INTO roleapplication 
+(corpid, orgid, roleid, applicationid, view, modify, insert, delete, status, type, createdate, createby, changedate, changeby, edit) VALUES
+(1,1,4,20,true,true,true,true,'ACTIVO','NINGUNO',NOW(),'VCAADMIN',NOW(),'VCAADMIN',false);
+INSERT INTO roleapplication 
+(corpid, orgid, roleid, applicationid, view, modify, insert, delete, status, type, createdate, createby, changedate, changeby, edit) VALUES
+(1,1,4,21,true,true,true,true,'ACTIVO','NINGUNO',NOW(),'VCAADMIN',NOW(),'VCAADMIN',false);
+INSERT INTO roleapplication 
+(corpid, orgid, roleid, applicationid, view, modify, insert, delete, status, type, createdate, createby, changedate, changeby, edit) VALUES
+(1,1,4,32,true,true,true,true,'ACTIVO','NINGUNO',NOW(),'VCAADMIN',NOW(),'VCAADMIN',false);
+INSERT INTO roleapplication 
+(corpid, orgid, roleid, applicationid, view, modify, insert, delete, status, type, createdate, createby, changedate, changeby, edit) VALUES
+(1,1,4,33,true,true,true,true,'ACTIVO','NINGUNO',NOW(),'VCAADMIN',NOW(),'VCAADMIN',false);
+INSERT INTO roleapplication 
+(corpid, orgid, roleid, applicationid, view, modify, insert, delete, status, type, createdate, createby, changedate, changeby, edit) VALUES
+(1,1,4,34,true,true,true,true,'ACTIVO','NINGUNO',NOW(),'VCAADMIN',NOW(),'VCAADMIN',false);
+INSERT INTO roleapplication 
+(corpid, orgid, roleid, applicationid, view, modify, insert, delete, status, type, createdate, createby, changedate, changeby, edit) VALUES
+(1,1,4,35,true,true,true,true,'ACTIVO','NINGUNO',NOW(),'VCAADMIN',NOW(),'VCAADMIN',false);
+INSERT INTO roleapplication 
+(corpid, orgid, roleid, applicationid, view, modify, insert, delete, status, type, createdate, createby, changedate, changeby, edit) VALUES
+(1,1,4,36,true,true,true,true,'ACTIVO','NINGUNO',NOW(),'VCAADMIN',NOW(),'VCAADMIN',false);
+INSERT INTO roleapplication 
+(corpid, orgid, roleid, applicationid, view, modify, insert, delete, status, type, createdate, createby, changedate, changeby, edit) VALUES
+(1,1,4,37,true,true,true,true,'ACTIVO','NINGUNO',NOW(),'VCAADMIN',NOW(),'VCAADMIN',false);
+INSERT INTO roleapplication 
+(corpid, orgid, roleid, applicationid, view, modify, insert, delete, status, type, createdate, createby, changedate, changeby, edit) VALUES
+(1,1,4,38,true,true,true,true,'ACTIVO','NINGUNO',NOW(),'VCAADMIN',NOW(),'VCAADMIN',false);
+INSERT INTO roleapplication 
+(corpid, orgid, roleid, applicationid, view, modify, insert, delete, status, type, createdate, createby, changedate, changeby, edit) VALUES
+(1,1,4,39,true,true,true,true,'ACTIVO','NINGUNO',NOW(),'VCAADMIN',NOW(),'VCAADMIN',false);
+INSERT INTO roleapplication 
+(corpid, orgid, roleid, applicationid, view, modify, insert, delete, status, type, createdate, createby, changedate, changeby, edit) VALUES
+(1,1,4,40,true,true,true,true,'ACTIVO','NINGUNO',NOW(),'VCAADMIN',NOW(),'VCAADMIN',false);
+
+INSERT INTO roleapplication 
+(corpid, orgid, roleid, applicationid, view, modify, insert, delete, status, type, createdate, createby, changedate, changeby, edit) VALUES
+(1,1,4,52,true,true,true,true,'ACTIVO','NINGUNO',NOW(),'VCAADMIN',NOW(),'VCAADMIN',false);
+INSERT INTO roleapplication 
+(corpid, orgid, roleid, applicationid, view, modify, insert, delete, status, type, createdate, createby, changedate, changeby, edit) VALUES
+(1,1,4,49,true,true,true,true,'ACTIVO','NINGUNO',NOW(),'VCAADMIN',NOW(),'VCAADMIN',false);
+INSERT INTO roleapplication 
+(corpid, orgid, roleid, applicationid, view, modify, insert, delete, status, type, createdate, createby, changedate, changeby, edit) VALUES
+(1,1,4,50,true,true,true,true,'ACTIVO','NINGUNO',NOW(),'VCAADMIN',NOW(),'VCAADMIN',false);
+INSERT INTO roleapplication 
+(corpid, orgid, roleid, applicationid, view, modify, insert, delete, status, type, createdate, createby, changedate, changeby, edit) VALUES
+(1,1,4,51,true,true,true,true,'ACTIVO','NINGUNO',NOW(),'VCAADMIN',NOW(),'VCAADMIN',false);
+INSERT INTO roleapplication 
+(corpid, orgid, roleid, applicationid, view, modify, insert, delete, status, type, createdate, createby, changedate, changeby, edit) VALUES
+(1,1,4,54,true,true,true,true,'ACTIVO','NINGUNO',NOW(),'VCAADMIN',NOW(),'VCAADMIN',false);
+INSERT INTO roleapplication 
+(corpid, orgid, roleid, applicationid, view, modify, insert, delete, status, type, createdate, createby, changedate, changeby, edit) VALUES
+(1,1,4,13,true,true,true,true,'ACTIVO','NINGUNO',NOW(),'VCAADMIN',NOW(),'VCAADMIN',false);
+INSERT INTO roleapplication 
+(corpid, orgid, roleid, applicationid, view, modify, insert, delete, status, type, createdate, createby, changedate, changeby, edit) VALUES
+(1,1,4,16,true,true,true,true,'ACTIVO','NINGUNO',NOW(),'VCAADMIN',NOW(),'VCAADMIN',false);
+INSERT INTO roleapplication 
+(corpid, orgid, roleid, applicationid, view, modify, insert, delete, status, type, createdate, createby, changedate, changeby, edit) VALUES
+(1,1,4,15,true,true,true,true,'ACTIVO','NINGUNO',NOW(),'VCAADMIN',NOW(),'VCAADMIN',false);
+
+--role administrador
+INSERT INTO roleapplication 
+(corpid, orgid, roleid, applicationid, view, modify, insert, delete, status, type, createdate, createby, changedate, changeby, edit) VALUES
+(1,1,1,16,true,true,true,true,'ACTIVO','NINGUNO',NOW(),'VCAADMIN',NOW(),'VCAADMIN',false);
+INSERT INTO roleapplication 
+(corpid, orgid, roleid, applicationid, view, modify, insert, delete, status, type, createdate, createby, changedate, changeby, edit) VALUES
+(1,1,1,15,true,true,true,true,'ACTIVO','NINGUNO',NOW(),'VCAADMIN',NOW(),'VCAADMIN',false);
+INSERT INTO roleapplication 
+(corpid, orgid, roleid, applicationid, view, modify, insert, delete, status, type, createdate, createby, changedate, changeby, edit) VALUES
+(1,1,1,27,true,true,true,true,'ACTIVO','NINGUNO',NOW(),'VCAADMIN',NOW(),'VCAADMIN',false);
